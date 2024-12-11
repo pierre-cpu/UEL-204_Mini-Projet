@@ -1,0 +1,28 @@
+<!-- add_content.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout de contenu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Ajouter un contenu</h2>
+        <form action="add_content_process.php" method="POST">
+            <label for="type">Type de contenu</label>
+            <select id="type" name="type" required>
+                <option value="etudiant">Étudiant</option>
+                <option value="cours">Cours</option>
+                <option value="resultat">Résultat</option>
+            </select>
+            
+            <label for="data">Données</label>
+            <textarea id="data" name="data" placeholder="Détails du contenu..." required></textarea>
+            
+            <button type="submit">Ajouter</button>
+        </form>
+    </div>
+</body>
+</html>
