@@ -37,8 +37,6 @@
 
 <?php 
 
-test
-
 ?>
 </body>
 </html>
