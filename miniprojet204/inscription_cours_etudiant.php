@@ -84,7 +84,7 @@
 		$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
-	catch {
+	catch (PDOException $e){
 		echo "Erreur de connexion : " . $e->getMessage();
 		exit;  // Si la connexion échoue, arrêter le script
 	}	
@@ -104,9 +104,10 @@
 		$stmt->execute(); // Execution
 		
 		// Vérifier si un étudiant avec cet identifiant existe
-		if ($stmt->rowCount() == 0) 
-		{				
-			echo "Cet identifiant n'existe pas. Veuillez vérifier l'identifiant.";
+		if ($stmt->rowCount() > 0){	
+		}
+		else {
+			echo "Identifiant invalide. Veuillez vérifiez votre identifiant.";
 		}
 	}	
 ?>
