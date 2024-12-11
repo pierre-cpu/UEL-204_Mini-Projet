@@ -17,6 +17,11 @@ body {
     width: 300px;
 }
 
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
 h2 {
     margin-bottom: 1em;
     color: #333333;
@@ -81,4 +86,68 @@ tbody tr:hover {
 textarea {
     height: 100px;
     resize: none;
+}
+
+#user_type {
+    margin-bottom: 1em;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+#user_type label {
+    font-size: 14px;
+}
+
+.role-menu {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.role-section {
+    background-color: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    border-radius: 8px;
+    padding: 10px;
+    flex: 1;
+}
+
+.role-section h3 {
+    background-color: #66bb6a;
+    color: white;
+    padding: 10px;
+    margin: -10px -10px 10px -10px;
+    border-radius: 8px 8px 0 0;
+    font-size: 18px;
+}
+
+.role-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.role-section li {
+    margin: 10px 0;
+}
+
+.role-section a {
+    text-decoration: none;
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.role-section a:hover {
+    text-decoration: underline;
+    color: #1b5e20;
+}
+
+.container_accueil {
+    width: 90%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
