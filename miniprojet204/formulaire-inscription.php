@@ -28,9 +28,6 @@ if ($_POST && count($_POST)) {
         <form action="" method="POST">
             <h2>Inscription</h2>
 
-            <label for="num_etudiant">Numéro Étudiant</label>
-            <input type="text" id="num_etudiant" name="num_etudiant" required>
-
             <label for="nom_etudiant">Nom</label>
             <input type="text" id="nom_etudiant" name="nom_etudiant" required>
 
@@ -52,9 +49,6 @@ if ($_POST && count($_POST)) {
     <div class="container">
         <form action="" method="POST">
             <h2>Inscription Professeur</h2>
-
-            <label for="id_prof">ID Professeur</label>
-            <input type="text" id="id_prof" name="id_prof" required>
 
             <label for="nom_prof">Nom</label>
             <input type="text" id="nom_prof" name="nom_prof" required>
