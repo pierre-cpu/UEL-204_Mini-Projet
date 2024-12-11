@@ -43,10 +43,22 @@
                             
                         </td>
                         <td>
-                              <!-- Formulaire d'ajout d'étudiant -->
-                            <input type="text" id="newStudentName-1" placeholder="Nom de l'étudiant à ajouter">
-                            <button onclick="addStudent(1)">Ajouter un étudiant</button> <br><br>
-                            <input type="text" id="removeStudentName-1" placeholder="Nom de l'étudiant à enlever">
+                         <!-- Liste déroulante pour ajouter un étudiant -->
+                            <select id="addStudentDropdown-1">
+                                <option value="0">Sélectionner un étudiant à ajouter</option>
+                                <option value="etudiant-1">Nom étudiant 1</option>
+                                <option value="etudiant-1">Nom étudiant 2</option>
+                                <option value="etudiant-2">Nom étudiant 3</option>
+                            </select>
+                            <button onclick="addStudent(1)">Ajouter un étudiant</button>
+                            <br><br>
+                            <!-- Liste déroulante pour enlever un étudiant -->
+                            <select id="removeStudentDropdown-1">
+                                <option value="0">Sélectionner un étudiant à enlever</option>
+                                <option value="etudiant-1">Nom étudiant 1</option>
+                                <option value="etudiant-2">Nom étudiant 2</option>
+                                <option value="etudiant-3">Nom étudiant 3</option>
+                            </select>
                             <button onclick="removeStudent(1)">Enlever un étudiant</button>
                         </td>
                     </tr>
@@ -59,10 +71,22 @@
 
                         </td>
                         <td>
-                              <!-- Formulaire d'ajout d'étudiant -->
-                            <input type="text" id="newStudentName-2" placeholder="Nom de l'étudiant à ajouter">
-                            <button onclick="addStudent(2)">Ajouter un étudiant</button> <br><br>
-                            <input type="text" id="removeStudentName-2" placeholder="Nom de l'étudiant à enlever">
+                             <!-- Liste déroulante pour ajouter un étudiant -->
+                            <select id="addStudentDropdown-2">
+                                <option value="0">Sélectionner un étudiant à ajouter</option>
+                                <option value="etudiant-1">Nom étudiant 1</option>
+                                <option value="etudiant-1">Nom étudiant 2</option>
+                                <option value="etudiant-2">Nom étudiant 3</option>
+                            </select>
+                            <button onclick="addStudent(2)">Ajouter un étudiant</button>
+                            <br><br>
+                            <!-- Liste déroulante pour enlever un étudiant -->
+                            <select id="removeStudentDropdown-2">
+                                <option value="0">Sélectionner un étudiant à enlever</option>
+                                <option value="etudiant-1">Nom étudiant 1</option>
+                                <option value="etudiant-2">Nom étudiant 2</option>
+                                <option value="etudiant-3">Nom étudiant 3</option>
+                            </select>
                             <button onclick="removeStudent(2)">Enlever un étudiant</button>
                         </td>
                     </tr>
