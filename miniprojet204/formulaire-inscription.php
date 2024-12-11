@@ -25,18 +25,29 @@
     <div class="container">
         <form action="" method="POST">
             <h2>Inscription</h2>
-            <label for="username">Nom d'utilisateur</label>
-            <input type="text" id="username" name="username" required>
+            <label for="username_etudiant">Nom d'utilisateur</label>
+            <input type="text" id="username_etudiant" name="username_etudiant" required>
             
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
+            <label for="password_etudiant">Mot de passe</label>
+            <input type="password_etudiant" id="password_etudiant" name="password_etudiant" required>
             
             <button type="submit">Soumettre</button>
         </form>
     </div>
-
+    <div class="container">
+        <form action="" method="POST">
+            <h2>Inscription</h2>
+            <label for="username_professeur">Nom d'utilisateur</label>
+            <input type="text" id="username_professeur" name="username_professeur" required>
+            
+            <label for="password_professeur">Mot de passe</label>
+            <input type="password_professeur" id="password_professeur" name="password_professeur" required>
+            
+            <button type="submit">Soumettre</button>
+        </form>
+    </div>
 <?php 
-je modifie
+
 ?>
 </body>
 </html>
