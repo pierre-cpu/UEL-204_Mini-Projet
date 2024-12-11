@@ -3,71 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Notes - Université</title>
+    <title>Gestion des Cours - Université</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="main-container">
-        <!-- Section principale -->
         <div class="form-container">
-            <h2>Gestion des Notes pour <span id="matiere">[Nom de la matière]</span></h2>
-            <form id="notesForm">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Étudiant</th>
-                            <th>Évaluation</th>
-                            <th>Note</th>
-                            <th>Commentaire</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="etudiant-1" class="etudiant">
-                            <td>
-                                <a href="etudiant.html?id=1">[NOM étudiant]</a>
-                            </td>
-                             <td>
-                                <!-- Sélection de l'intitulé de l'évaluation -->
-                                <select id="evaluation-1" name="evaluation[1]" required>
-                                    <option value="examen_final">Examen final</option>
-                                    <option value="projet">Projet</option>
-                                    <option value="devoir">Devoir à rendre</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="number" id="note-1" name="note[1]" min="0" max="20" step="0.5" value="" required>
-                            </td>
-                            <td>
-                                <textarea id="commentaire-1" name="commentaire[1]" placeholder="Ajouter un commentaire..."></textarea>
-                            </td>
-                        </tr>
-                        <tr id="etudiant-2" class="etudiant">
-                            <td>
-                                <a href="etudiant.html?id=2">[NOM étudiant]</a>
-                            </td>
-                             <td>
-                                <!-- Sélection de l'intitulé de l'évaluation -->
-                                <select id="evaluation-1" name="evaluation[1]" required>
-                                    <option value="examen_final">Examen final</option>
-                                    <option value="projet">Projet</option>
-                                    <option value="devoir">Devoir à rendre</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="number" id="note-2" name="note[2]" min="0" max="20" step="0.5" value="" required>
-                            </td>
-                            <td>
-                                <textarea id="commentaire-2" name="commentaire[2]" placeholder="Ajouter un commentaire..."></textarea>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="submit">Enregistrer les Notes</button>
+            <h2>Gérer mes Cours</h2>
+
+            <!-- Liste déroulante des cours -->
+            <form action="prof-notes.html" method="get">
+                <label for="courseSelect">Choisir un Cours :</label>
+                <select id="courseSelect" name="courseId">
+                    <option value="1">Cours 1</option>
+                    <option value="2">Cours 2</option>
+                    <option value="3">Cours 3</option>
+                    <option value="4">Cours 4</option>
+                </select>
+                <button type="submit">Voir les Notes</button>
             </form>
-            <br>
-                <button id="manageCoursesBtn">Gérer mes cours
-                <a href="gerer_cours.html"></a>
-            </button>
+
+            <h3>Cours disponibles :</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom du Cours</th>
+                        <th>Étudiants Inscrits</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="cours-table">
+                    <tr id="cours-1">
+                        <td>Cours 1</td>
+                        <td>
+                            <ul id="etudiant_cours-1">
+                                <li>Nom étudiant</li>
+                                <li>Nom étudiant</li>
+                            </ul>
+                            
+                        </td>
+                        <td>
+                              <!-- Formulaire d'ajout d'étudiant -->
+                            <input type="text" id="newStudentName-1" placeholder="Nom de l'étudiant à ajouter">
+                            <button onclick="addStudent(1)">Ajouter un étudiant</button> <br><br>
+                            <input type="text" id="removeStudentName-1" placeholder="Nom de l'étudiant à enlever">
+                            <button onclick="removeStudent(1)">Enlever un étudiant</button>
+                        </td>
+                    </tr>
+                    <tr id="cours-2">
+                        <td>Cours 2</td>
+                        <td>
+                            <ul id="etudiant-cours-2">
+                                <li> Nom étudiant</li>
+                            </ul>
+
+                        </td>
+                        <td>
+                              <!-- Formulaire d'ajout d'étudiant -->
+                            <input type="text" id="newStudentName-2" placeholder="Nom de l'étudiant à ajouter">
+                            <button onclick="addStudent(2)">Ajouter un étudiant</button> <br><br>
+                            <input type="text" id="removeStudentName-2" placeholder="Nom de l'étudiant à enlever">
+                            <button onclick="removeStudent(2)">Enlever un étudiant</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </body>
