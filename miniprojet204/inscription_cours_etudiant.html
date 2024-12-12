@@ -1,0 +1,39 @@
+
+<?php
+	include_once("inc.function.php");
+	$date_courante = date('Y-m-d');
+	
+	if($_POST && count($_POST)){
+	inscriptioncours(student_id, cours_uel, $date_courante);
+    }
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+	<div class="container">
+		<form action="" method="post">
+			<h2>Inscription à un cours</h2>
+			<label for="student_id">Identifiant :</label>
+			<input type="text" id="student_id" name="student_id" required>
+			
+			<label for="cours_uel">Cours :</label>
+			<select id="cours_uel" name="cours_uel" required>
+				<!-- Les options seront générées dynamiquement en PHP -->
+				<?php
+					
+				?>
+			</select>
+			
+			<button type="submit">S'inscrire</button>
+		</form>
+	</div>
+</body>
+</html>
