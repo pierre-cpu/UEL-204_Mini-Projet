@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>bddexion</title>
-    <!--<link rel="stylesheet" href="style.css">-->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     
@@ -43,7 +43,6 @@
 							
 							// Afficher chaque cours dans une option
 							foreach ($courses as $course) {
-								var_dump($course['code_uel']);
 								echo "<option value='" . $course['code_uel'] . "'>". $course['code_uel'] . ' | ' . $course['nom'] . "</option>";
 							}
 						} 
@@ -90,7 +89,6 @@
 	// Vérifier le formulaire 
 	if ($_POST && count($_POST) && !empty($_POST['student_id']) && !empty($_POST['cours_uel'])) {
     
-	var_dump($_POST);
 		$id = $_POST['student_id']; // Récupérer l'identifiant donné
 		$cours_uel = $_POST['cours_uel'];
 
