@@ -1,0 +1,34 @@
+<!-- results.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Résultats des étudiants</h2>
+        <form action="search_results.php" method="GET">
+            <label for="search">Rechercher</label>
+            <input type="text" id="search" name="search" placeholder="Nom de l'étudiant ou cours" required>
+            <button type="submit">Rechercher</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Étudiant</th>
+                    <th>Cours</th>
+                    <th>Note</th>
+                    <th>Crédits</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Les résultats seront affichés ici -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

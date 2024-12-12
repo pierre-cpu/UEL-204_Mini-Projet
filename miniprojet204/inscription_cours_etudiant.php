@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="style.css">
+    <title>bddexion</title>
+    <!--<link rel="stylesheet" href="style.css">-->
 </head>
 <body>
     
@@ -18,35 +18,33 @@
 			<select id="cours_uel" name="cours_uel" required>
 				<option value="">Sélectionner un cours</option>
 				
-				<?php   // Généerer les options dynamiquement en PHP 
+				<?php   // Générer les options dynamiquement en PHP 
 					
-					// Paramètres de la connexion
+					// Paramètres de la bddexion
 					$servername = "localhost";  
 					$username = "universite";         
 					$password = "universite";             
 					$dbname = "universite";     
 
 					try {
-						$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-						$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+						$bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+						$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-						// Requête SQL pour récupérer les cours
-						$sql = "SELECT code_uel, nom FROM cours";
-						$stmt = $conn->prepare($sql);
+						// Requête SQL pour récupérer les code_uel et nom des cours
+						$get_info = "SELECT code_uel, nom FROM cours";
+						$stmt = $bdd->prepare($get_info);
 						$stmt->execute();
 
 						// Récupérer les résultats sous forme de tableau associatif
 						$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 						// Vérifier si des cours ont été récupérés
-						if ($courses && count($courses) > 0) {
-							echo "<pre>"; // Format lisible pour afficher le tableau
-							print_r($courses); // Afficher les données des cours
-							echo "</pre>";
-
+						if ($courses && count($courses)) {
+							
 							// Afficher chaque cours dans une option
-							foreach ($courses as $cours) {
-								echo "<option value='" . $cours['code_uel'] . "'>" . $cours['nom'] . "</option>";
+							foreach ($courses as $course) {
+								var_dump($course['code_uel']);
+								echo "<option value='" . $course['code_uel'] . "'>". $course['code_uel'] . ' | ' . $course['nom'] . "</option>";
 							}
 						} 
 						else 
@@ -60,8 +58,8 @@
 						echo "Erreur : " . $e->getMessage(); // Afficher l'erreur PDO
 					} 
 					finally {
-						// Fermer la connexion
-						$conn = null;
+						// Fermer la bddexion
+						$bdd = null;
 					}
 				?>
 				
@@ -73,7 +71,8 @@
 </body>
 </html>
 
-<?php  // Vérifier que l'identifiant saisi est valide (présent dans la bdd)
+<?php  
+// Vérifier que l'identifiant saisi est valide (présent dans la bdd)
 	
 	$servername = "localhost";  
 	$username = "universite";         
@@ -81,33 +80,52 @@
 	$dbname = "universite"; 
 	
 	try {
-		$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	}
 	catch (PDOException $e){
-		echo "Erreur de connexion : " . $e->getMessage();
-		exit;  // Si la connexion échoue, arrêter le script
+		die("Erreur de bddexion : " . $e->getMessage());
 	}	
 	
-	// Vérification si le formulaire est soumis
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		
-		$student_id = $_POST['student_id'];   // Récupérer l'identifiant soumis
-		
-		// Préparer la requête SQL pour vérifier si l'identifiant existe
-		$sql = "SELECT * FROM etudiants WHERE identifiant = :student_id";
-		$stmt = $conn->prepare($sql);  // Préparation de la requête
-		
-		// Lier l'identifiant à la requête
-		$stmt->bindParam(':student_id', $student_id, PDO::PARAM_INT);
-		
-		$stmt->execute(); // Execution
-		
-		// Vérifier si un étudiant avec cet identifiant existe
-		if ($stmt->rowCount() > 0){	
+	// Vérifier le formulaire 
+	if ($_POST && count($_POST) && !empty($_POST['student_id']) && !empty($_POST['cours_uel'])) {
+    
+	var_dump($_POST);
+		$id = $_POST['student_id']; // Récupérer l'identifiant donné
+		$cours_uel = $_POST['cours_uel'];
+
+		// Vérifier que l'identifiant existe dans la table etudiants
+
+		$check_id = $bdd->prepare('SELECT numero_etudiant FROM etudiants WHERE identifiant = :identifiant');
+		$check_id->bindParam(':identifiant', $id, PDO::PARAM_STR);
+		$check_id->execute(); // Récupérer dans la table les champs où l'identifiant correspond.
+		$etudiant = $check_id->fetch(PDO::FETCH_ASSOC); // Rendre ces données accessibles
+		// condition où des données aec ce nom existent
+		if ($etudiant) {
+			echo "<p style='color:green;'>Identifiant valide.</p>";
+			
+			// Récupérer le `numero_etudiant` et la date actuelle
+			$numero_etudiant = $etudiant['numero_etudiant'];
+			$date_inscription = date('Y-m-d H:i:s');
+			
+			// Ajout d'une inscription dans la table Inscriptions
+			$new_inscription = $bdd->prepare('INSERT INTO inscriptions (code_uel, numero_etudiant, date) VALUES (:code_uel, :numero_etudiant, :date)');
+			$new_inscription->bindParam(':numero_etudiant', $numero_etudiant, PDO::PARAM_STR);
+			$new_inscription->bindParam(':code_uel', $cours_uel, PDO::PARAM_STR);
+			$new_inscription->bindParam(':date', $date_inscription, PDO::PARAM_STR);
+			
+			if ($new_inscription->execute()) {
+				echo "<p style='color:green;'>Inscription réussie !</p>";
+			}
+			else {
+				echo "<p style='color:red;'>Une erreur est survenue lors de l'inscription.</p>";
+			}
 		}
 		else {
-			echo "Identifiant invalide. Veuillez vérifiez votre identifiant.";
+			echo "<p style='color:red;'>Identifiant incorect. Veuillez vérifier votre identifiant.</p>";
 		}
-	}	
+	}
+	else {
+		echo 'ERREUR';
+	}
 ?>
