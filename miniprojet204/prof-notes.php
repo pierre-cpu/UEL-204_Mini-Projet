@@ -60,6 +60,16 @@ if ($_POST) {
    ;
 }
 
+// ajouter des types d'évaluation
+$requeteevaluation = $bdd->prepare('INSERT INTO evaluation (code_uel, type, intitule, coeficient) 
+        VALUES (:code_uel, :type, :intitule, :coeficient)');
+        $requeteevaluation->execute(array(
+            'code_uel' => '', //a compléter avec la variable correspondant au nom du champ de formulaire
+            'type' => $_POST['username'],
+            'intitule' => '',
+            'coeficient' => ''
+            ));
+        $requeteinscriptionprof->closeCursor();
 ?>
 
 <!DOCTYPE html>
@@ -75,6 +85,11 @@ if ($_POST) {
         <!-- Section principale -->
         <div class="form-container">
             <h2>Gestion des Notes pour <span id="matiere"><?php echo $_SESSION['utilisateur'] ?></span></h2>
+            
+            <form action="POST">
+            <label for="evaluation-code_uel"><input type="text" id="evaluation-code_uel" name="evaluation-code_uel"></input>
+            </form>
+            
             <form method="POST" id="notesForm">
                 <table>
                     <thead>
