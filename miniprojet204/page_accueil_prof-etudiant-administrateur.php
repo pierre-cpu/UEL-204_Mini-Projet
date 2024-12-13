@@ -48,6 +48,7 @@
                 <ul>
                     <li><a href="gestion_etudiants.html">Gestion des étudiants</a></li>
                     <li><a href="gestion_professeurs.html">Gestion des professeurs</a></li>
+					<li><a href="gestion_cours.html">Gestion des cours</a></li>
                     <li><a href="autre.html">Autres fonctionnalités</a></li>
                 </ul>
             </div>

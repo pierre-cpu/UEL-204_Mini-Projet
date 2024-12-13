@@ -1,4 +1,5 @@
-<?php session_start(); 
+<?php 
+	session_start(); 
 	// Paramètres de connexion
 	$servername = "localhost";  
 	$username = "universite";         
