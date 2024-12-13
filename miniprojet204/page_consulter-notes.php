@@ -40,13 +40,6 @@ $_SESSION['utilisateur'] = 'bernard3';
 			<?php   // Générer les options dynamiquement en PHP 
 					
 				try {
-					// Requête SQL pour récupérer le numero_etudiant de l'etudiant connecté
-					$get_info = $bdd->prepare ("SELECT numero_etudiant FROM etudiants WHERE identifiant = :identifiant");
-					$get_info->bindParam(':identifiant', $_SESSION['utilisateur'], PDO::PARAM_STR);
-					$get_info->execute();
-					
-					$etudiant = $get_info->fetch(PDO::FETCH_ASSOC);
-					
 					// Requête SQL pour récupérer les code_uel des cours
 					$get_uel = $bdd->prepare ("SELECT code_uel FROM inscriptions WHERE numero_etudiant = :identifiant");
 					$get_uel->bindParam(':identifiant', $etudiant['numero_etudiant'], PDO::PARAM_STR);
@@ -77,25 +70,47 @@ $_SESSION['utilisateur'] = 'bernard3';
 			<button type="submit">Voir les notes</button>
 		</form>
 	</div>
-</body>
-</html>
 
+<div class="">
 <?php 
 	// Afficher les Notes correspondant au cours seleccionné
-	if($_POST && count($_POST)
-			&& array_key_exists('cours_uel', $_POST)
-			&& !empty($_POST['cours_uel'])) {
-		$code_uel = $_POST['cours_uel'];
+	if($_POST && array_key_exists('code_uel', $_POST) && !empty($_POST['code_uel'])) {
+		
+		$code_uel = $_POST['code_uel'];
 		
 		try {
 			// Requête sql pour récupérer les évalutions du cours sélectionné
-			$get_evals = $bdd->prepare ("SELECT type, intitule, coeficient, date FROM evaluations WHERE code_uel = :code_uel");
+			$get_evals = $bdd->prepare ("SELECT id_eval, type, intitule, coeficient, date FROM evaluations WHERE code_uel = :code_uel");
 			$get_evals->bindParam(':code_uel', $code_uel, PDO::PARAM_STR);
+			
 			$get_evals->execute();
 			
-			$evals = $get_evals->fetch(PDO::FETCH_ASSOC);
-			var_dump($evals);
-			// Requête sql pour récupérer les notes des évaluations de l'étudiant connecté
+			echo "<tr><th>Type</th> | <th>Intitulé</th> | <th>Coefficient</th> | <th>Date</th> | <th>Note</th></tr>";
+			// Récupération des notes des évaluations de l'étudiant connecté
+			while ($eval = $get_evals->fetch(PDO::FETCH_ASSOC)) {
+				
+				// Récupérer la note de l'étudiant pour cette évaluation
+				$get_note = $bdd->prepare ("SELECT note, commentaire FROM notes WHERE id_eval = :id_eval AND numero_etudiant = :etudiant");
+				$get_note->bindParam(':id_eval', $eval['id_eval'], PDO::PARAM_STR);
+				$get_note->bindParam(':etudiant', $etudiant['numero_etudiant'], PDO::PARAM_STR);
+				
+				
+				$get_note->execute();
+				$note_data = $get_note->fetch(PDO::FETCH_ASSOC);
+				
+				$note = isset($note_data['note']) ? htmlspecialchars($note_data['note'], ENT_QUOTES, 'UTF-8') : 'Aucune note';
+				$commentaire = isset($note_data['commentaire']) ? htmlspecialchars($note_data['commentaire'], ENT_QUOTES, 'UTF-8') : 'Pas de commentaire';
+				
+				echo "<tr>
+                            <td>" . htmlspecialchars($eval['type'], ENT_QUOTES, 'UTF-8') . "</td>
+                            <td>" . htmlspecialchars($eval['intitule'], ENT_QUOTES, 'UTF-8') . "</td>
+                            <td>" . htmlspecialchars($eval['coeficient'], ENT_QUOTES, 'UTF-8') . "</td>
+                            <td>" . htmlspecialchars($eval['date'], ENT_QUOTES, 'UTF-8') . "</td>
+                            <td>$note/20</td>
+							<td>$commentaire</td>
+                          </tr>";
+			}
+			echo "</table>";
 		}
 		catch (PDOException $e)
 		{
@@ -104,8 +119,17 @@ $_SESSION['utilisateur'] = 'bernard3';
 	}
 	else 
 	{
-		echo "Aucune donnée transmise : "; // Afficher l'erreur PDO
+		echo "Veuillez sélectionner un cours pour voir vos notes.";
 	}
-	// Fermer la bddexion
+?>
+		
+		
+		
+		</div>
+	</body>
+</html>
+
+<?php
+// Fermer la connexion
 	$bdd = null;
 ?>
