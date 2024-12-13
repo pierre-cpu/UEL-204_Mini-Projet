@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 13 déc. 2024 à 15:37
+-- Généré le : ven. 13 déc. 2024 à 21:08
 -- Version du serveur : 8.2.0
 -- Version de PHP : 8.2.13
 
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `administrateurs`;
 CREATE TABLE IF NOT EXISTS `administrateurs` (
   `nom` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `identifiant` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
-  `motdepasse` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL
+  `motdepasse` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -39,12 +39,12 @@ CREATE TABLE IF NOT EXISTS `administrateurs` (
 --
 
 INSERT INTO `administrateurs` (`nom`, `identifiant`, `motdepasse`) VALUES
-('Pierre', 'pierre', 'passpierre'),
-('Malo', 'malo', 'passmalo'),
-('Maiwenn', 'maiwenn', 'passmaiwenn'),
-('Jacques', 'jacques', 'passjacques'),
-('universite', 'universite', 'universite'),
-('universite', 'universite', 'universite');
+('Pierre', 'pierre', '$2y$10$l7kMThUskam7HkeARqT3aO0ozlo5HX4eCm7kxN1iyXGhTD.MxI0TW'),
+('Malo', 'malo', '$2y$10$l7kMThUskam7HkeARqT3aO0ozlo5HX4eCm7kxN1iyXGhTD.MxI0TW'),
+('Maiwenn', 'maiwenn', '$2y$10$l7kMThUskam7HkeARqT3aO0ozlo5HX4eCm7kxN1iyXGhTD.MxI0TW'),
+('Jacques', 'jacques', '$2y$10$l7kMThUskam7HkeARqT3aO0ozlo5HX4eCm7kxN1iyXGhTD.MxI0TW'),
+('universite', 'universite', '$2y$10$l7kMThUskam7HkeARqT3aO0ozlo5HX4eCm7kxN1iyXGhTD.MxI0TW'),
+('universite', 'universite', '$2y$10$l7kMThUskam7HkeARqT3aO0ozlo5HX4eCm7kxN1iyXGhTD.MxI0TW');
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `etudiants` (
   `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email` varchar(320) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `identifiant` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `motdepasse` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `motdepasse` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`numero_etudiant`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
@@ -124,36 +124,36 @@ CREATE TABLE IF NOT EXISTS `etudiants` (
 --
 
 INSERT INTO `etudiants` (`numero_etudiant`, `nom`, `prenom`, `email`, `identifiant`, `motdepasse`) VALUES
-('INE00000001', 'Dupont', 'Alice', 'alice.dupont@example.com', 'dupont1', 'password1'),
-('INE00000002', 'Martin', 'Lucas', 'lucas.martin@example.com', 'martin2', 'password2'),
-('INE00000003', 'Bernard', 'Chloé', 'chloe.bernard@example.com', 'bernard3', 'password3'),
-('INE00000004', 'Thomas', 'Louis', 'louis.thomas@example.com', 'thomas4', 'password4'),
-('INE00000005', 'Petit', 'Emma', 'emma.petit@example.com', 'petit5', 'password5'),
-('INE00000006', 'Robert', 'Léo', 'leo.robert@example.com', 'robert6', 'password6'),
-('INE00000007', 'Richard', 'Mia', 'mia.richard@example.com', 'richard7', 'password7'),
-('INE00000008', 'Durand', 'Gabriel', 'gabriel.durand@example.com', 'durand8', 'password8'),
-('INE00000009', 'Moreau', 'Sofia', 'sofia.moreau@example.com', 'moreau9', 'password9'),
-('INE00000010', 'Laurent', 'Noah', 'noah.laurent@example.com', 'laurent10', 'password10'),
-('INE00000011', 'Simon', 'Anna', 'anna.simon@example.com', 'simon11', 'password11'),
-('INE00000012', 'Michel', 'Hugo', 'hugo.michel@example.com', 'michel12', 'password12'),
-('INE00000013', 'Lefevre', 'Lina', 'lina.lefevre@example.com', 'lefevre13', 'password13'),
-('INE00000014', 'Mercier', 'Ethan', 'ethan.mercier@example.com', 'mercier14', 'password14'),
-('INE00000015', 'Garnier', 'Julie', 'julie.garnier@example.com', 'garnier15', 'password15'),
-('INE00000016', 'Faure', 'Mathis', 'mathis.faure@example.com', 'faure16', 'password16'),
-('INE00000017', 'Chevalier', 'Camille', 'camille.chevalier@example.com', 'chevalier17', 'password17'),
-('INE00000018', 'Blanc', 'Nathan', 'nathan.blanc@example.com', 'blanc18', 'password18'),
-('INE00000019', 'Muller', 'Zoé', 'zoe.muller@example.com', 'muller19', 'password19'),
-('INE00000020', 'Morin', 'Jules', 'jules.morin@example.com', 'morin20', 'password20'),
-('INE00000021', 'Roux', 'Alice', 'alice.roux@example.com', 'roux21', 'password21'),
-('INE00000022', 'Fournier', 'Tom', 'tom.fournier@example.com', 'fournier22', 'password22'),
-('INE00000023', 'Girard', 'Léa', 'lea.girard@example.com', 'girard23', 'password23'),
-('INE00000024', 'Clement', 'Oscar', 'oscar.clement@example.com', 'clement24', 'password24'),
-('INE00000025', 'Perrin', 'Lucie', 'lucie.perrin@example.com', 'perrin25', 'password25'),
-('INE00000026', 'Renaud', 'Adam', 'adam.renaud@example.com', 'renaud26', 'password26'),
-('INE00000027', 'Dumas', 'Chloé', 'chloe.dumas@example.com', 'dumas27', 'password27'),
-('INE00000028', 'Brun', 'Alex', 'alex.brun@example.com', 'brun28', 'password28'),
-('INE00000029', 'Gauthier', 'Sarah', 'sarah.gauthier@example.com', 'gauthier29', 'password29'),
-('INE00000030', 'Bourgeois', 'Liam', 'liam.bourgeois@example.com', 'bourgeois30', 'password30');
+('INE00000001', 'Dupont', 'Alice', 'alice.dupont@example.com', 'dupont1', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000002', 'Martin', 'Lucas', 'lucas.martin@example.com', 'martin2', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000003', 'Bernard', 'Chloé', 'chloe.bernard@example.com', 'bernard3', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000004', 'Thomas', 'Louis', 'louis.thomas@example.com', 'thomas4', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000005', 'Petit', 'Emma', 'emma.petit@example.com', 'petit5', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000006', 'Robert', 'Léo', 'leo.robert@example.com', 'robert6', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000007', 'Richard', 'Mia', 'mia.richard@example.com', 'richard7', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000008', 'Durand', 'Gabriel', 'gabriel.durand@example.com', 'durand8', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000009', 'Moreau', 'Sofia', 'sofia.moreau@example.com', 'moreau9', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000010', 'Laurent', 'Noah', 'noah.laurent@example.com', 'laurent10', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000011', 'Simon', 'Anna', 'anna.simon@example.com', 'simon11', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000012', 'Michel', 'Hugo', 'hugo.michel@example.com', 'michel12', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000013', 'Lefevre', 'Lina', 'lina.lefevre@example.com', 'lefevre13', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000014', 'Mercier', 'Ethan', 'ethan.mercier@example.com', 'mercier14', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000015', 'Garnier', 'Julie', 'julie.garnier@example.com', 'garnier15', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000016', 'Faure', 'Mathis', 'mathis.faure@example.com', 'faure16', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000017', 'Chevalier', 'Camille', 'camille.chevalier@example.com', 'chevalier17', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000018', 'Blanc', 'Nathan', 'nathan.blanc@example.com', 'blanc18', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000019', 'Muller', 'Zoé', 'zoe.muller@example.com', 'muller19', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000020', 'Morin', 'Jules', 'jules.morin@example.com', 'morin20', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000021', 'Roux', 'Alice', 'alice.roux@example.com', 'roux21', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000022', 'Fournier', 'Tom', 'tom.fournier@example.com', 'fournier22', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000023', 'Girard', 'Léa', 'lea.girard@example.com', 'girard23', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000024', 'Clement', 'Oscar', 'oscar.clement@example.com', 'clement24', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000025', 'Perrin', 'Lucie', 'lucie.perrin@example.com', 'perrin25', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000026', 'Renaud', 'Adam', 'adam.renaud@example.com', 'renaud26', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000027', 'Dumas', 'Chloé', 'chloe.dumas@example.com', 'dumas27', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000028', 'Brun', 'Alex', 'alex.brun@example.com', 'brun28', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000029', 'Gauthier', 'Sarah', 'sarah.gauthier@example.com', 'gauthier29', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO'),
+('INE00000030', 'Bourgeois', 'Liam', 'liam.bourgeois@example.com', 'bourgeois30', '$2y$10$hDa89gg.r.AtHygzCJoji.FI2C4F69tjzvlSdT6kQ2kfosUp8.ipO');
 
 -- --------------------------------------------------------
 
@@ -573,22 +573,22 @@ CREATE TABLE IF NOT EXISTS `professeurs` (
 --
 
 INSERT INTO `professeurs` (`id_prof`, `nom`, `prenom`, `email`, `identifiant`, `motdepasse`) VALUES
-(1, 'universite', '', '', '', 'universite'),
-(2, 'Durand', 'Marc', 'marc.durand@example.com', 'durand1', 'passprof1'),
-(3, 'Petit', 'Sophie', 'sophie.petit@example.com', 'petit2', 'passprof2'),
-(4, 'Roux', 'Jean', 'jean.roux@example.com', 'roux3', 'passprof3'),
-(5, 'Lemoine', 'Claire', 'claire.lemoine@example.com', 'lemoine4', 'passprof4'),
-(6, 'Garnier', 'Paul', 'paul.garnier@example.com', 'garnier5', 'passprof5'),
-(7, 'Morel', 'Julie', 'julie.morel@example.com', 'morel6', 'passprof6'),
-(8, 'Lambert', 'Pierre', 'pierre.lambert@example.com', 'lambert7', 'passprof7'),
-(9, 'Chevalier', 'Anne', 'anne.chevalier@example.com', 'chevalier8', 'passprof8'),
-(10, 'Muller', 'Thomas', 'thomas.muller@example.com', 'muller9', 'passprof9'),
-(11, 'Blanc', 'Camille', 'camille.blanc@example.com', 'blanc10', 'passprof10'),
-(12, 'Fontaine', 'Luc', 'luc.fontaine@example.com', 'fontaine11', 'passprof11'),
-(13, 'Perrin', 'Elise', 'elise.perrin@example.com', 'perrin12', 'passprof12'),
-(14, 'Faure', 'Antoine', 'antoine.faure@example.com', 'faure13', 'passprof13'),
-(15, 'Simon', 'Laura', 'laura.simon@example.com', 'simon14', 'passprof14'),
-(16, 'Richard', 'Hugo', 'hugo.richard@example.com', 'richard15', 'passprof15');
+(1, 'universite', '', '', '', '$2y$10$0DiJHPCgU1PJI'),
+(2, 'Durand', 'Marc', 'marc.durand@example.com', 'durand1', '$2y$10$0DiJHPCgU1PJI'),
+(3, 'Petit', 'Sophie', 'sophie.petit@example.com', 'petit2', '$2y$10$0DiJHPCgU1PJI'),
+(4, 'Roux', 'Jean', 'jean.roux@example.com', 'roux3', '$2y$10$0DiJHPCgU1PJI'),
+(5, 'Lemoine', 'Claire', 'claire.lemoine@example.com', 'lemoine4', '$2y$10$0DiJHPCgU1PJI'),
+(6, 'Garnier', 'Paul', 'paul.garnier@example.com', 'garnier5', '$2y$10$0DiJHPCgU1PJI'),
+(7, 'Morel', 'Julie', 'julie.morel@example.com', 'morel6', '$2y$10$0DiJHPCgU1PJI'),
+(8, 'Lambert', 'Pierre', 'pierre.lambert@example.com', 'lambert7', '$2y$10$0DiJHPCgU1PJI'),
+(9, 'Chevalier', 'Anne', 'anne.chevalier@example.com', 'chevalier8', '$2y$10$0DiJHPCgU1PJI'),
+(10, 'Muller', 'Thomas', 'thomas.muller@example.com', 'muller9', '$2y$10$0DiJHPCgU1PJI'),
+(11, 'Blanc', 'Camille', 'camille.blanc@example.com', 'blanc10', '$2y$10$0DiJHPCgU1PJI'),
+(12, 'Fontaine', 'Luc', 'luc.fontaine@example.com', 'fontaine11', '$2y$10$0DiJHPCgU1PJI'),
+(13, 'Perrin', 'Elise', 'elise.perrin@example.com', 'perrin12', '$2y$10$0DiJHPCgU1PJI'),
+(14, 'Faure', 'Antoine', 'antoine.faure@example.com', 'faure13', '$2y$10$0DiJHPCgU1PJI'),
+(15, 'Simon', 'Laura', 'laura.simon@example.com', 'simon14', '$2y$10$0DiJHPCgU1PJI'),
+(16, 'Richard', 'Hugo', 'hugo.richard@example.com', 'richard15', '$2y$10$0DiJHPCgU1PJI');
 
 --
 -- Contraintes pour les tables déchargées

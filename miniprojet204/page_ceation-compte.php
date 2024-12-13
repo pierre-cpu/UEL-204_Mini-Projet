@@ -5,9 +5,6 @@
 include_once("inc/inc.function.php");
 
 
-
-
-
 if ($_POST && count($_POST)) {
     inscriptionprof();
 
