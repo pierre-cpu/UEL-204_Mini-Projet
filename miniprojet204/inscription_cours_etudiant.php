@@ -1,3 +1,14 @@
+<?php
+	session_start();
+	// Paramètres de connexion
+	$servername = "localhost";  
+	$username = "universite";         
+	$password = "universite";             
+	$dbname = "universite";
+	
+	$bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,50 +27,29 @@
 			
 			<label for="cours_uel">Cours :</label>
 			<select id="cours_uel" name="cours_uel" required>
-				<option value="">Sélectionner un cours</option>
+				<option value="">-- Sélectionner un cours --</option>
 				
 				<?php   // Générer les options dynamiquement en PHP 
 					
-					// Paramètres de la bddexion
-					$servername = "localhost";  
-					$username = "universite";         
-					$password = "universite";             
-					$dbname = "universite";     
-
-					try {
-						$bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-						$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+					try {						
 						// Requête SQL pour récupérer les code_uel et nom des cours
 						$get_info = "SELECT code_uel, nom FROM cours";
 						$stmt = $bdd->prepare($get_info);
 						$stmt->execute();
 
 						// Récupérer les résultats sous forme de tableau associatif
-						$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-						// Vérifier si des cours ont été récupérés
-						if ($courses && count($courses)) {
+						while ($course = $stmt->fetch(PDO::FETCH_ASSOC)) {
+							// Utiliser htmlspecialchars pour empêcher les injections XSS
+							$code_uel = htmlspecialchars($course['code_uel'], ENT_QUOTES, 'UTF-8');
+							$nom = htmlspecialchars($course['nom'], ENT_QUOTES, 'UTF-8');
 							
-							// Afficher chaque cours dans une option
-							foreach ($courses as $course) {
-								echo "<option value='" . $course['code_uel'] . "'>". $course['code_uel'] . ' | ' . $course['nom'] . "</option>";
-							}
+							echo "<option value='$code_uel'>$code_uel | $nom</option>";
 						} 
-						else 
-						{
-							echo "<option value=''>Aucun cours disponible</option>";
-						}
 					} 
-					
 					catch (PDOException $e) 
 					{
-						echo "Erreur : " . $e->getMessage(); // Afficher l'erreur PDO
+						echo "Erreur de chargement des cours: " . $e->getMessage(); // Afficher l'erreur PDO
 					} 
-					finally {
-						// Fermer la bddexion
-						$bdd = null;
-					}
 				?>
 				
 			</select>
@@ -71,27 +61,14 @@
 </html>
 
 <?php  
-// Vérifier que l'identifiant saisi est valide (présent dans la bdd)
-	
-	$servername = "localhost";  
-	$username = "universite";         
-	$password = "universite";             
-	$dbname = "universite"; 
-	
-	try {
-		$bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch (PDOException $e){
-		die("Erreur de bddexion : " . $e->getMessage());
-	}	
-	
-	// Vérifier le formulaire 
-	if ($_POST && count($_POST) && !empty($_POST['student_id']) && !empty($_POST['cours_uel'])) {
+	// Vérifier l'envoi du formulaire 
+	if ($_POST && count($_POST)
+			&& array_key_exists('student_id', $_POST) && array_key_exists('cours_uel', $_POST)
+			&& !empty($_POST['student_id']) && !empty($_POST['cours_uel'])) {
     
 		$id = $_POST['student_id']; // Récupérer l'identifiant donné
 		$cours_uel = $_POST['cours_uel'];
-
+		global $bdd;
 		// Vérifier que l'identifiant existe dans la table etudiants
 
 		$check_id = $bdd->prepare('SELECT numero_etudiant FROM etudiants WHERE identifiant = :identifiant');
@@ -126,4 +103,7 @@
 	else {
 		echo 'ERREUR';
 	}
+	
+	// Fermeture de la connexion
+	$bdd = null;
 ?>
