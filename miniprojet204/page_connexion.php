@@ -82,6 +82,7 @@
 					//ouverture de la session 
 					$_SESSION['identifiant'] = $identifiant;
 					$_SESSION['mdp'] = $m_d_p;
+					$_SESSION['statut'] = 'etudiant';
 
 				echo 'Vous êtes maintenant connecté comme ' . $identifiant . ' <br><a href="">se diriger vers la page d\'accueil</a>';
 				}
@@ -123,7 +124,7 @@
 				
 					$_SESSION['identifiant'] = $_POST['nom'];
 					$_SESSION['mdp'] = $_POST['password'];
-
+					$_SESSION['statut'] = 'professeur';
 				   
 				echo 'Vous êtes maintenant connecté comme '.$_POST["identifiant"].' <br><a href="">se diriger vers la page d\'accueil</a>';
 
@@ -156,7 +157,8 @@
 					//ouverture de la session 
 					$_SESSION['identifiant'] = $identifiant;
 					$_SESSION['mdp'] = $m_d_p;
-
+					$_SESSION['statut'] = 'administrateur';
+					
 				echo 'Vous êtes maintenant connecté comme ' . $identifiant . ' <br><a href="">se diriger vers la page d\'accueil</a>';
 				}
 			}	
