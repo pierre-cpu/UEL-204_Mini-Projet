@@ -76,13 +76,12 @@
 				
 				$valid_mdp = $get_motdepasse->fetch(PDO::FETCH_ASSOC);
 				
-				if (!($valid_mdp[motdepasse] === $m_d_p)) {
+				if (!password_verify($m_d_p, $valid_mdp)) {
 					echo ' mot de passe incorrect';
 				}
 				else{
 					//ouverture de la session 
 					$_SESSION['identifiant'] = $identifiant;
-					$_SESSION['mdp'] = $m_d_p;
 					$_SESSION['statut'] = 'etudiant';
 
 				echo 'Vous êtes maintenant connecté comme ' . $identifiant . ' <br><a href="">se diriger vers la page d\'accueil</a>';
@@ -117,14 +116,14 @@
 
 				// vérification de la correspondance entre mot de passe dans la base de donnée et le nom d'utilsiateur donné
 
-				if (!($mdpdata === $m_d_p)) {
+				if (!password_verify($m_d_p, $valid_mdp)) {
 					echo ' mot de passe incorrect';
-				}else{
+				}	
+				else{
 
 				 //ouverture de la session 
 				
 					$_SESSION['identifiant'] = $_POST['nom'];
-					$_SESSION['mdp'] = $_POST['password'];
 					$_SESSION['statut'] = 'professeur';
 				   
 				echo 'Vous êtes maintenant connecté comme '.$_POST["identifiant"].' <br><a href="">se diriger vers la page d\'accueil</a>';
@@ -151,13 +150,12 @@
 				
 				$valid_mdp = $get_motdepasse->fetch(PDO::FETCH_ASSOC);
 				
-				if (!($valid_mdp[motdepasse] === $m_d_p)) {
+				if (!password_verify($m_d_p, $valid_mdp)) {
 					echo ' mot de passe incorrect';
 				}
 				else{
 					//ouverture de la session 
 					$_SESSION['identifiant'] = $identifiant;
-					$_SESSION['mdp'] = $m_d_p;
 					$_SESSION['statut'] = 'administrateur';
 					
 				echo 'Vous êtes maintenant connecté comme ' . $identifiant . ' <br><a href="">se diriger vers la page d\'accueil</a>';

@@ -1,4 +1,4 @@
-<?php /*
+<?php /* 
 // Paramètres de connexion
 	$servername = "localhost";  
 	$username = "universite";         
