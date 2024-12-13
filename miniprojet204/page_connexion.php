@@ -48,7 +48,7 @@
         
         <!-- Lien vers la page d'inscription -->
         <p class="signup-link">
-            Pas encore inscrit ? <a href="formulaire-inscription.php">Créer un compte</a>
+            Pas encore inscrit ? <a href="page_ceation-compte.php">Créer un compte</a>
         </p>
     </div>
 </body>

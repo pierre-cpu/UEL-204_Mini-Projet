@@ -1,3 +1,7 @@
+<?php 
+	session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,8 +19,8 @@
             <div class="role-section">
                 <h3>Étudiant</h3>
                 <ul>
-                    <li><a href="inscription_cours.html">S'inscrire à un cours</a></li>
-                    <li><a href="consulter_notes.html">Consulter ses notes</a></li>
+                    <li><a href="inscription_cours_etudiant.php">S'inscrire à un cours</a></li>
+                    <li><a href="page_consulter-notes.php">Consulter ses notes</a></li>
                 </ul>
             </div>
 
@@ -24,8 +28,8 @@
             <div class="role-section">
                 <h3>Professeur</h3>
                 <ul>
-                    <li><a href="ajouter_cours.html">Ajouter/enlever un cours</a></li>
-                    <li><a href="editer_notes.html">Éditer les notes des étudiants</a></li>
+                    <li><a href="prof-creation-evaluation.php">Ajouter / Supprimer une Evaluation</a></li>
+                    <li><a href="prof-notes.php">Éditer les notes des étudiants</a></li>
                 </ul>
             </div>
 
