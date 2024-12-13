@@ -10,6 +10,50 @@
 	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <form action="login_process.php" method="POST">
+            <h2>Connexion</h2>
+            
+            <!-- Choix du type d'utilisateur -->
+            <label for="user_type">Je suis :</label>
+            <div id="user_type">
+                <input type="radio" id="etudiant" name="user_type" value="etudiant" required>
+                <label for="etudiant">Étudiant</label>
+                
+                <input type="radio" id="professeur" name="user_type" value="professeur" required>
+                <label for="professeur">Professeur</label>
+				
+				<input type="radio" id="administrateur" name="user_type" value="administrateur" required>
+                <label for="administrateur">Administrateur</label>
+            </div>
+            
+            <!-- Champs de connexion -->
+            <label for="username">Identifiant</label>
+            <input type="text" id="username" name="Identifiant" required>
+            
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Se connecter</button>
+        </form>
+        
+        <!-- Lien vers la page d'inscription -->
+        <p class="signup-link">
+            Pas encore inscrit ? <a href="formulaire-inscription.php">Créer un compte</a>
+        </p>
+    </div>
+</body>
+</html>
+
 <?php
 
 	if ($_POST && array_key_exists('identifiant', $_POST) && array_key_exists('password', $_POST) && !empty($_POST['identifiant']) && !empty($_POST['password'])) {
@@ -122,48 +166,3 @@
 		}
 	}
 ?>
-
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <form action="login_process.php" method="POST">
-            <h2>Connexion</h2>
-            
-            <!-- Choix du type d'utilisateur -->
-            <label for="user_type">Je suis :</label>
-            <div id="user_type">
-                <input type="radio" id="etudiant" name="user_type" value="etudiant" required>
-                <label for="etudiant">Étudiant</label>
-                
-                <input type="radio" id="professeur" name="user_type" value="professeur" required>
-                <label for="professeur">Professeur</label>
-				
-				<input type="radio" id="administrateur" name="user_type" value="administrateur" required>
-                <label for="administrateur">Administrateur</label>
-            </div>
-            
-            <!-- Champs de connexion -->
-            <label for="username">Identifiant</label>
-            <input type="text" id="username" name="Identifiant" required>
-            
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Se connecter</button>
-        </form>
-        
-        <!-- Lien vers la page d'inscription -->
-        <p class="signup-link">
-            Pas encore inscrit ? <a href="formulaire-inscription.php">Créer un compte</a>
-        </p>
-    </div>
-</body>
-</html>
