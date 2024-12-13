@@ -1,6 +1,7 @@
 
 <?php
 
+//Créer un fonction de connexion à la base de donnée à réutiliser
 
 /*fonctionalités générales */
 // Param�tres de connexion
@@ -106,9 +107,9 @@ function inscriptioncours() {
 $requeteinscriptioncours = $bdd->prepare('INSERT INTO Inscription (num_etudiant, CODE_UEL, Date)  
 	VALUES (:num_etudiant, :CODE_UEL, :Date)');
 	$requeteinscriptioncours->execute(array(
-		'num_etudiant' => '', //a compléter avec la variable correspondant au nom du champ de formulaire
-		'CODE_UEL' => '',
-		'Date' => ''
+		'identifiant' => 'student_id', //a compléter avec la variable correspondant au nom du champ de formulaire
+		'CODE_UEL' => 'cours_uel',
+		'Date' => '' // $date_courante = date('Y-m-d');
 		));
 	echo 'Vous avez été ajouté au cours $CODE_UEL.';
 	$requeteinscriptionprof->closeCursor();
