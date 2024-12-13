@@ -7,8 +7,16 @@ $_SESSION['utilisateur'] = 'bernard3';
 	$password = "universite";             
 	$dbname = "universite";
 	
+	// Connexion à la bdd
 	$bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 	$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	
+	// Requête SQL pour récupérer le numero_etudiant de l'etudiant connecté
+	$get_info = $bdd->prepare ("SELECT numero_etudiant FROM etudiants WHERE identifiant = :identifiant");
+	$get_info->bindParam(':identifiant', $_SESSION['utilisateur'], PDO::PARAM_STR);
+	$get_info->execute();
+	
+	$etudiant = $get_info->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -77,11 +85,27 @@ $_SESSION['utilisateur'] = 'bernard3';
 	if($_POST && count($_POST)
 			&& array_key_exists('cours_uel', $_POST)
 			&& !empty($_POST['cours_uel'])) {
+		$code_uel = $_POST['cours_uel'];
 		
 		try {
-			// Requête sql pour récupérer les évalutions du cours séleccionné
+			// Requête sql pour récupérer les évalutions du cours sélectionné
+			$get_evals = $bdd->prepare ("SELECT type, intitule, coeficient, date FROM evaluations WHERE code_uel = :code_uel");
+			$get_evals->bindParam(':code_uel', $code_uel, PDO::PARAM_STR);
+			$get_evals->execute();
+			
+			$evals = $get_evals->fetch(PDO::FETCH_ASSOC);
+			var_dump($evals);
+			// Requête sql pour récupérer les notes des évaluations de l'étudiant connecté
+		}
+		catch (PDOException $e)
+		{
+			echo "Erreur : " . $e->getMessage(); // Afficher l'erreur PDO
+		}
 	}
-	
+	else 
+	{
+		echo "Aucune donnée transmise : "; // Afficher l'erreur PDO
+	}
 	// Fermer la bddexion
 	$bdd = null;
 ?>
