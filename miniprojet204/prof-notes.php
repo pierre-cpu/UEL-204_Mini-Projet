@@ -1,15 +1,15 @@
 <?php 
 // ouverture de la session
 session_start();
-
-
+$_SESSION['identifiant'] = 'durand1'; 
+$_SESSION['statut'] = 'professeur';
 
 // verification de la session
 
 if($_SESSION 
 && count($_SESSION) 
-    && array_key_exists('utilisateur', $_SESSION)
-        && !empty($_SESSION['utilisateur'])){ 
+    && array_key_exists('identifiant', $_SESSION)
+        && !empty($_SESSION['identifiant'])){ 
             
         // connection à la base de donnée
 $serveur  = "localhost:3306";
