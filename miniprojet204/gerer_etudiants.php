@@ -1,7 +1,7 @@
 <?php
 	session_start();
-
-$_SESSION['statut'] = 'administrateur';
+	
+$_SESSION['statut'] = 'administrateur';	
 	
 	// Vérifiez si une session est active et si l'utilisateur est bien un administrateur.
 	if (!isset($_SESSION['statut']) || $_SESSION['statut'] !== 'administrateur') {
@@ -26,7 +26,7 @@ $_SESSION['statut'] = 'administrateur';
 		</body>
 		</html>';
 		exit(); // Arrête l'exécution du script
-	}
+	}	
 	
 	// Paramètres de connexion
 	$servername = "localhost";  
@@ -121,7 +121,6 @@ if (isset($_POST['add'])) {
 			&& array_key_exists('code_uel', $_POST) && array_key_exists('nom', $_POST) && array_key_exists('credits', $_POST)
 			&& !empty($_POST['code_uel']) && !empty($_POST['nom']) && !empty($_POST['credits'])) {
 		
-		$code_uel = filter_var($_POST['code_uel'], FILTER_VALIDATE_INT);
 		if ($code_uel === false) {
 			$message = "Erreur : code_uel doit être un entier valide.";
 		} 

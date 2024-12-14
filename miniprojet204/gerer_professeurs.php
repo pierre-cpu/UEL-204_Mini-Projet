@@ -43,13 +43,13 @@ $_SESSION['statut'] = 'administrateur';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Cours - Université</title>
+    <title>Gestion des Professeurs - Université</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="main-container">
         <div class="form-container">
-            <h1>Gérer les Cours</h1>
+            <h1>Gérer les Professeurs</h1>
 			
 			 <!-- Affichage des messages -->
             <?php if (!empty($message)): ?>
@@ -58,72 +58,78 @@ $_SESSION['statut'] = 'administrateur';
                 </p>
             <?php endif; ?>
 			
-            <!-- Liste déroulante des cours -->
+            <!-- Liste déroulante des professeurs -->
             <form action="" method="post">
-			    <h2>Supression de Cours</h2>
-                <label for="courseSelect"></label>
+			    <h2>Supression d'un Professeur</h2>
+                <label for="professeurSelect"></label>
         			
-				<select id="cours" name="cours" required>
-					<option value="">-- Sélectionner un cours --</option>
+				<select id="professeur" name="professeur" required>
+					<option value="">-- Sélectionner un professeur --</option>
 					
 					<?php   // Générer les options dynamiquement en PHP 
 						
 						try {						
-							// Requête SQL pour récupérer les code_uel et nom des cours
-							$get_info = "SELECT code_uel, nom FROM cours";
+							// Requête SQL pour récupérer les identifiants, noms et prénoms des professeurs
+							$get_info = "SELECT nom, prenom FROM professeurs";
 							$stmt = $bdd->prepare($get_info);
 							$stmt->execute();
 
 							// Récupérer les résultats sous forme de tableau associatif
-							while ($course = $stmt->fetch(PDO::FETCH_ASSOC)) {
+							while ($professeur = $stmt->fetch(PDO::FETCH_ASSOC)) {
 								// Utiliser htmlspecialchars pour empêcher les injections XSS
-								$code_uel = htmlspecialchars($course['code_uel'], ENT_QUOTES, 'UTF-8');
-								$nom = htmlspecialchars($course['nom'], ENT_QUOTES, 'UTF-8');
+								$nom = htmlspecialchars($professeur['nom'], ENT_QUOTES, 'UTF-8');
+								$prenom = htmlspecialchars($professeur['prenom'], ENT_QUOTES, 'UTF-8');
 								
-								echo "<option value='$code_uel'>$code_uel | $nom</option>";
+								echo "<option value='professeur'>$nom | $prenom</option>";
 							}							
 						} 
 						catch (PDOException $e) 
 						{
-							echo "Erreur de chargement des cours: " . $e->getMessage(); // Afficher l'erreur PDO
+							echo "Erreur de chargement des professeur: " . $e->getMessage(); // Afficher l'erreur PDO
 						} 
 					?>
 				</select>
 				
-                <button type="submit" name="delete">Supprimer le cours</button>
+                <button type="submit" name="delete">Supprimer le professeur</button>
             </form>
 		</div>
 <br><hr><br>		
 		<div class="form-container">
 			<form action="" method="POST">
-				<h2>Ajout de cours</h2>
+				<h2>Ajout de professeur</h2>
 
-				<label for="code_uel">Code uel du cours</label>
-				<input type="text" id="code_uel" name="code_uel" required>
-
-				<label for="nom">Nom du cours</label>
+				<label for="nom">Nom du professeur</label>
 				<input type="text" id="nom" name="nom" required>
 
-				<label for="credits">Nombre de crédits associés</label>
-				<input type="credits" id="credits" name="credits" required>
+				<label for="prenom">Prénom du professeur</label>
+				<input type="text" id="prenom" name="prenom" required>
+				
+				<label for="email">E-mail du professeur</label>
+				<input type="text" id="email" name="email" required>
+				
+				<label for="identifiant">Identifiant du professeur</label>
+				<input type="text" id="identifiant" name="identifiant" required>
+				
+				<label for="nom">Mot de passe du professeur</label>
+				<input type="text" id="mdp" name="mdp" required>
+				
 
-				<button type="submit" name="add">Ajouter le cours</button>
+				<button type="submit" name="add">Ajouter le professeur</button>
 			</form>
 		</div>
     </div>
 </body>
 </html>
 
-<?php  // Ajout d'un nouveau cours
+<?php  // Ajout d'un nouveau professeur
 //Vérifier que le bouton ajouter a été cliqué
 if (isset($_POST['add'])) {
 	if ($_POST && count($_POST)
-			&& array_key_exists('code_uel', $_POST) && array_key_exists('nom', $_POST) && array_key_exists('credits', $_POST)
-			&& !empty($_POST['code_uel']) && !empty($_POST['nom']) && !empty($_POST['credits'])) {
+			&& array_key_exists('nom', $_POST) && array_key_exists('prenom', $_POST) && array_key_exists('email', $_POST)) && array_key_exists('identifiant', $_POST)) && array_key_exists('mdp', $_POST)
+			&& !empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['email']) && !empty($_POST['identifiant']) && !empty($_POST['mdp'])) {
 		
-		$code_uel = filter_var($_POST['code_uel'], FILTER_VALIDATE_INT);
-		if ($code_uel === false) {
-			$message = "Erreur : code_uel doit être un entier valide.";
+		if ($nom === false) {
+			$message = "Erreur : nom doit être un entier valide.";
 		} 
 		else {
 			$credits = filter_var($_POST['credits'], FILTER_VALIDATE_INT);
@@ -133,22 +139,22 @@ if (isset($_POST['add'])) {
 			else {
 				$nom = trim($_POST['nom']);  // Supprime les espaces au début et la fin de la chaîne
 				if (strlen($nom) > 255) {
-					$message = "Erreur : le nom du cours est trop long.";
+					$message = "Erreur : le nom du professeur est trop long.";
 				} 
 				else {
-					// Requête d'insertion du cours dans la table
+					// Requête d'insertion du professeur dans la table
 					try {
-						$sql = "INSERT INTO cours (code_uel, nom, credits) VALUES (:code_uel, :nom, :credits)";
+						$sql = "INSERT INTO professeur (nom, nom, credits) VALUES (:nom, :nom, :credits)";
 						$stmt = $bdd->prepare($sql);
-						$stmt->bindParam(':code_uel', $code_uel);
+						$stmt->bindParam(':nom', $nom);
 						$stmt->bindParam(':nom', $nom);
 						$stmt->bindParam(':credits', $credits);
 						$stmt->execute();
 
-						echo "<p style='color: green;'>Cours ajouté avec succès !</p>";
+						echo "<p style='color: green;'>professeur ajouté avec succès !</p>";
 					} 
 					catch (PDOException $e) {
-						echo "<p style='color: red;'>Erreur lors de l'ajout du cours : " . $e->getMessage() . "</p>";
+						echo "<p style='color: red;'>Erreur lors de l'ajout du professeur : " . $e->getMessage() . "</p>";
 					} 
 				}
 			}
@@ -160,35 +166,35 @@ if (isset($_POST['add'])) {
 }
 	
 	
-			// Suppression d'un cours
+			// Suppression d'un professeur
 if (isset($_POST['delete'])) {
-	if (!empty($_POST['cours'])) {
+	if (!empty($_POST['professeur'])) {
     
-		$code_uel = filter_var($_POST['cours'], FILTER_VALIDATE_INT);
+		$identifiant = htmlspecialchars($_POST['identifiant'], ENT_QUOTES, 'UTF-8');
 		    
-		if ($code_uel === false) {
-			$message = "Erreur : le code du cours sélectionné est invalide.";
+		if ($identifiant === false) {
+			$message = "Erreur : le code du professeur sélectionné est invalide.";
 		}
 		else {
 			try {
-				$sql = "DELETE FROM cours WHERE code_uel = :code_uel_delete";
+				$sql = "DELETE FROM professeur WHERE identifiant = :identifiant";
 				$stmt = $bdd->prepare($sql);
-				$stmt->bindParam(':code_uel_delete', $code_uel_delete, PDO::PARAM_INT);
+				$stmt->bindParam(':identifiant', $identifiant, PDO::PARAM_INT);
 				$stmt->execute();
 
 				if ($stmt->rowCount() > 0) {
-					$message = "Cours supprimé avec succès !";
+					$message = "professeur supprimé avec succès !";
 				} else {
-					$message = "Aucun cours trouvé avec ce code.";
+					$message = "Aucun professeur trouvé avec ce code.";
 				}
 			} 
 			catch (PDOException $e) {
-				$message = "Erreur lors de la suppression du cours : " . $e->getMessage();
+				$message = "Erreur lors de la suppression du professeur : " . $e->getMessage();
 			}
 		}
 	}
 	else {
-		$message = "Veuillez sélectionner un cours à supprimer.";
+		$message = "Veuillez sélectionner un professeur à supprimer.";
 	}
 }
 ?>
