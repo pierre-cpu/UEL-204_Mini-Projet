@@ -35,7 +35,7 @@ $etudiant = $get_info->fetch(PDO::FETCH_ASSOC);
 
 		<form action="" method="post">
 			<label for="code_uel">Choisissez un cours :</label>
-			<select id="code_uel" name="code_uel" required>
+			<select class="select-size" id="code_uel" name="code_uel" required>
 				<option value="">-- Sélectionnez un cours --</option>
 
 				<?php   // Générer les options dynamiquement en PHP 

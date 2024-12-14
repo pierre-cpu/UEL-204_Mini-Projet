@@ -33,13 +33,23 @@ label {
     font-size: 14px;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     padding: 0.7em;
     margin-bottom: 1em;
     border: 1px solid #cccccc;
     border-radius: 4px;
     font-size: 14px;
+}
+
+.select-size {
+    width: 100%;
+}
+
+.select-size2 {
+    width: 97%;
 }
 
 button {
@@ -125,6 +135,7 @@ textarea {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
 .table-container {
     overflow-x: auto;
     padding: 10px;
@@ -164,3 +175,20 @@ textarea {
     background-color: #f1f1f1;
 }
 
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
