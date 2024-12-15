@@ -1,8 +1,6 @@
 <!-- inscription.html -->
 <?php
 
-
-
 $serveur  = "localhost:3306";
 $database = "universite";
 $user     = "universite";
