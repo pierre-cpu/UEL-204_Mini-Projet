@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div >
+    <div class="container">
         <form action="" method="POST">
             <h2>Connexion </h2>
             
