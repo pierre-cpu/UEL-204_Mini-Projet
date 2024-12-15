@@ -1,7 +1,7 @@
 <!-- inscription.html -->
 <?php
 
-
+session_start();
 
 $serveur  = "localhost:3306";
 $database = "universite";
@@ -26,17 +26,23 @@ catch(Exception $e)
      
 
      if($_POST && count($_POST)){
-        $requeteinscriptionprof = $bdd->prepare('INSERT INTO professeurs (nom, prenom, email, identifiant, motdepasse) 
+
+        $password = $_POST['mot_de_passe_prof'];
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+
+        $requeteinscriptionprofesseurs = $bdd->prepare('INSERT INTO professeurs (nom, prenom, email, identifiant, motdepasse) 
         VALUES (:nom, :prenom, :email, :identifiant, :motdepasse)');
-        $requeteinscriptionprof->execute(array(
-            'nom' => $_POST['username'],
-            'prenom' => $_POST['prenom'],
-            'email' => $_POST['email'],
-            'identifiant' => $_POST['identifiant'],
-            'motdepasse' => $_POST['password']
+        $requeteinscriptionprofesseurs->execute(array(
+           
+            'nom' => $_POST['nom_prof'],
+            'prenom' => $_POST['prenom_prof'],
+            'email' => $_POST['email_prof'],
+            'identifiant' => $_POST['identifiant_prof'],
+            'motdepasse' => $hashed_password
             ));
-        echo '<div>Vous avez été ajouté comme nouvel utilisateur professeur. <a href="page_connexion.php">Vous pouvez vous connecter ici</a></div>';
-        $requeteinscriptionprof->closeCursor();
+        echo 'Vous avez été ajouté comme nouvel utilisateur professeur.  <a href="page_connexion.php">Vous pouvez vous connecter ici</a>';
+        $requeteinscriptionprofesseurs->closeCursor();
 
     }
  ?>
@@ -49,30 +55,31 @@ catch(Exception $e)
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    
+
+<div class="container">
         <form action="" method="POST">
-            <h2>Inscription Professeur</h2>
+            <h2>Inscription Etudiant</h2>
 
-            <label for="identifiant">Identifiant</label>
-            <input type="text" id="identifiant" name="identifiant" required>
 
-            <label for="username">Nom</label>
-            <input type="text" id="username" name="username" required>
+            <label for="nom_prof">Nom</label>
+            <input type="text" id="nom_prof" name="nom_prof" required>
 
-            <label for="prenom">Prenom</label>
-            <input type="text" id="prenom" name="prenom" required>
+            <label for="prenom_prof">Prénom</label>
+            <input type="text" id="prenom_prof" name="prenom_prof" required>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
-            
+            <label for="email_prof">E-mail</label>
+            <input type="email" id="email_prof" name="email_prof" required>
+
+            <label for="identifiant_prof">Identifiant</label>
+            <input type="text" id="identifiant_prof" name="identifiant_prof" required>
+
+            <label for="mot_de_passe_prof">Mot de passe</label>
+            <input type="password" id="mot_de_passe_prof" name="mot_de_passe_prof" required>
+
             <button type="submit">Soumettre</button>
         </form>
     </div>
-
-
     
 </body>
 

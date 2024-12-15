@@ -6,12 +6,13 @@ session_start();
 
 // verification de la session
 
-if (
-    $_SESSION
-    && count($_SESSION)
-    && array_key_exists('utilisateur', $_SESSION)
-    && !empty($_SESSION['utilisateur'])
-) {
+if($_SESSION 
+&& count($_SESSION) 
+    && array_key_exists('identifiant', $_SESSION)
+        && !empty($_SESSION['identifiant']))
+ 
+ {
+    
 
     // connection à la base de donnée
     $serveur = "localhost:3306";
@@ -35,7 +36,10 @@ if (
     // envoie des infos du formulaire dans la table evaluation de la bdd
 
     if ($_POST) {
-        $requeteevaluation = $bdd->prepare('INSERT INTO evaluation (code_uel, intitule, coeficient, type, date) 
+
+    
+
+       $requeteevaluation = $bdd->prepare('INSERT INTO evaluations (code_uel, intitule, coeficient, type, date) 
         VALUES (:code_uel, :intitule, :coeficient, :type, :date)');
         $requeteevaluation->execute(
             array(
@@ -46,8 +50,9 @@ if (
                 'date' => $_POST['date']
             )
         );
+        echo "Evaluation ajoutée avec succès";
         $requeteevaluation->closeCursor();
-    }
+    } 
 
     // récupération de la liste des codes uel des cours
     $listecours = array();
@@ -73,19 +78,23 @@ if (
         <div class="main-container">
             <!-- Section principale -->
             <div class="form-container">
-                <h2>Création des évaluations pour <span id="matiere"><?php echo $_SESSION['utilisateur'] ?></span></h2>
+            <h2><span id="matiere">Création des évaluations pour <?php echo $_SESSION['identifiant'] ?>.
+                    
+        </span></h2>
 
                 <form method="POST">
                     <fieldset>
-                        <legend>Créer une evaluation</legend>
+                        <legend>Créer une evaluation </legend>
                         <label for="code_uel">UEL du cours pour l'évaluation</label>
-                        <select class="select-size" id="cours" name="code_uel" min="0" max="20" step="0.5" value=""
-                            required>
-                            <?php foreach ($listecours as $nom) {
-                                echo '<option value="">' . $nom . '</option>';
-                            } ?>
+                        
+                        <?php echo '<FORM method="POST" action="">';
+                        echo '<select class="select-size" id="cours" name="code_uel" min="0" max="20" step="0.5" value="code_uel"
+                            required>';
+                        foreach ($listecours as $nom) {
+                                echo '<option value="'.$nom.'">'.$nom.'</option>';
+                            }
 
-                        </select>
+                        echo '</select> </form>'; ?>
 
                         <label for="intitule">Donner un intitulé pour l'évaluation</label>
                         <input class="select-size2" type="text" id="intitule" name="intitule"></input>
@@ -109,6 +118,9 @@ if (
 
 
             </div>
+            <div class="role-section">
+                <a href="deconnexion-session.php">  Pour vous déconneter, cliquez ici.</a>
+                        </div>
         </div>
     </body>
 

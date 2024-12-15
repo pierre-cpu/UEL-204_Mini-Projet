@@ -115,6 +115,9 @@ $etudiant = $get_info->fetch(PDO::FETCH_ASSOC);
 		}
 		?>
 	</div>
+	<div class="role-section">
+                <a href="deconnexion-session.php">  Pour vous déconneter, cliquez ici.</a>
+                        </div>
 </body>
 
 </html>

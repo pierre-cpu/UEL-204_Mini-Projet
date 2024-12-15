@@ -191,4 +191,9 @@ if (isset($_POST['delete'])) {
 		$message = "Veuillez sélectionner un cours à supprimer.";
 	}
 }
+
+
 ?>
+<div class="role-section">
+                <a href="deconnexion-session.php">  Pour vous déconneter, cliquez ici.</a>
+                        </div>

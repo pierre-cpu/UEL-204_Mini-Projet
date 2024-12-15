@@ -35,7 +35,7 @@
             <div class="role-section">
                 <h3>Professeur</h3>
                 <ul>
-                    <li><a href="prof-creation-evaluation.php">Ajouter / Supprimer une Evaluation</a></li>
+                    <li><a href="prof-creation-evaluation.php">Ajouter une Evaluation</a></li>
                     <li><a href="prof-notes.php">Éditer les notes des étudiants</a></li>
                 </ul>
             </div>
@@ -55,6 +55,9 @@
 		<?php endif; ?>
 		
         </div>
+        <div class="role-section">
+                <a href="deconnexion-session.php">  Pour vous déconneter, cliquez ici.</a>
+                        </div>
     </div>
 </body>
 </html>

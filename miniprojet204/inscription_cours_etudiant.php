@@ -56,6 +56,9 @@
 			
 			<button type="submit">S'inscrire</button>
 		</form>
+		<div class="role-section">
+                <a href="deconnexion-session.php">  Pour vous déconneter, cliquez ici.</a>
+                        </div>
 	</div>
 </body>
 </html>
@@ -103,6 +106,7 @@
 	else {
 		echo 'ERREUR';
 	}
+
 	
 	// Fermeture de la connexion
 	$bdd = null;

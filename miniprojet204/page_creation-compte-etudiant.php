@@ -1,7 +1,7 @@
 <!-- inscription.html -->
 <?php
 
-
+session_start();
 
 $serveur  = "localhost:3306";
 $database = "universite";

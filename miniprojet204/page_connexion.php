@@ -59,9 +59,6 @@
 <?php
 if ($_POST && isset($_POST['identifiant'], $_POST['password'], $_POST['user_type'])) {
 
-	echo $_POST['identifiant'];
-	echo $_POST['password'];
-	echo $_POST['user_type'];
     // Récupérer les données du formulaire
     $identifiant = htmlspecialchars($_POST['identifiant'], ENT_QUOTES, 'UTF-8'); 
     $m_d_p = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
@@ -71,13 +68,18 @@ if ($_POST && isset($_POST['identifiant'], $_POST['password'], $_POST['user_type
     $table = '';
     if ($user_type === 'professeurs') {
         $table = 'professeurs';
+     
     } elseif ($user_type === 'administrateurs') {
         $table = 'administrateurs';
     } elseif ($user_type === 'etudiants') {
         $table = 'etudiants';
+        
     } else {
         echo 'Type d\'utilisateur inconnu.';
         exit;
+
+
+
     }
 
 
@@ -85,6 +87,9 @@ if ($_POST && isset($_POST['identifiant'], $_POST['password'], $_POST['user_type
     $check_id = $bdd->prepare("SELECT * FROM $table WHERE identifiant = ?");
     $check_id->execute([$identifiant]);
     $utilisateur = $check_id->fetch(PDO::FETCH_ASSOC);
+    
+    echo $utilisateur['nom'];
+    echo $utilisateur['email'];
 
 
 
