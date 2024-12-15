@@ -20,26 +20,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <form action="login_process.php" method="POST">
-            <h2>Connexion</h2>
+    <div >
+        <form action="" method="POST">
+            <h2>Connexion </h2>
             
-            <!-- Choix du type d'utilisateur -->
-            <label for="user_type">Je suis :</label>
+            <!-- Choix du type d'utilisateur <label for="user_type">Je suis :</label> -->
+            
             <div id="user_type">
-                <input type="radio" id="etudiant" name="user_type" value="etudiant" required>
+                <input type="radio" id="etudiant" name="user_type" value="etudiants" required>
                 <label for="etudiant">Étudiant</label>
                 
-                <input type="radio" id="professeur" name="user_type" value="professeur" required>
+                <input type="radio" id="professeur" name="user_type" value="professeurs" required>
                 <label for="professeur">Professeur</label>
 				
-				<input type="radio" id="administrateur" name="user_type" value="administrateur" required>
+				<input type="radio" id="administrateur" name="user_type" value="administrateurs" required>
                 <label for="administrateur">Administrateur</label>
-            </div>
+            </div> 
             
             <!-- Champs de connexion -->
             <label for="username">Identifiant</label>
-            <input type="text" id="username" name="Identifiant" required>
+            <input type="text" id="username" name="identifiant" required>
             
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required>
@@ -49,77 +49,62 @@
         
         <!-- Lien vers la page d'inscription -->
         <p class="signup-link">
-            Pas encore inscrit ? <a href="page_ceation-compte.php">Créer un compte</a>
+            Pas encore inscrit ? <a href="page_creation-compte-etudiant.php">Créer un compte en tant qu'étudiant</a><br>
+			<a href="page_creation-compte-professeur.php">Créer un compte en tant que professeur</a>
         </p>
     </div>
 </body>
 </html>
 
 <?php
+if ($_POST && isset($_POST['identifiant'], $_POST['password'], $_POST['user_type'])) {
 
-	if ($_POST && array_key_exists('identifiant', $_POST) && array_key_exists('password', $_POST) && !empty($_POST['identifiant']) && !empty($_POST['password'])) {
-		// récupérer l'identifiant et le mot de passe donné
-		$identifiant = htmlspecialchars($_POST['identifiant'], ENT_QUOTES, 'UTF-8'); 
-        $m_d_p = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
-		
-		// Si connecté comme professeur
-		if (array_key_exists('professeur', $_POST) && !empty($_POST['professeur'])) {
-			$check_id = $bdd->prepare('SELECT * FROM professeurs WHERE identifiant=?');
-			$check_id->execute([$identifiant]);
-			$utilisateur = $check_id->fetch();
-			
-			if ($utilisateur) {
-				$get_motdepasse = $bdd->prepare("SELECT motdepasse FROM professeurs WHERE identifiant = :m_d_p");
-				$get_motdepasse->bindParam(':m_d_p', $m_d_p, PDO::PARAM_STR);
-				
-				$get_motdepasse->execute();
-				
-				$valid_mdp = $get_motdepasse->fetch(PDO::FETCH_ASSOC);
-				
-				if (!password_verify($m_d_p, $valid_mdp)) {
-					echo ' mot de passe incorrect';
-				}
-				else{
-					//ouverture de la session 
-					$_SESSION['identifiant'] = $identifiant;
-					$_SESSION['statut'] = 'professeur';
+	echo $_POST['identifiant'];
+	echo $_POST['password'];
+	echo $_POST['user_type'];
+    // Récupérer les données du formulaire
+    $identifiant = htmlspecialchars($_POST['identifiant'], ENT_QUOTES, 'UTF-8'); 
+    $m_d_p = htmlspecialchars($_POST['password'], ENT_QUOTES, 'UTF-8');
+    $user_type = $_POST['user_type']; // Récupérer le type d'utilisateur (professeur, administrateur, etc.)
 
-				echo 'Vous êtes maintenant connecté comme ' . $identifiant . ' <br><a href="">se diriger vers la page d\'accueil</a>';
-				}
-			}	
-		}
-		else{
-			echo 'Identifiant incorrect';
-		}
-		
-		// Si connecté comme Administrateur
-		if (array_key_exists('administrateur', $_POST) && !empty($_POST['administrateur'])) {
-			$check_id = $bdd->prepare('SELECT * FROM administrateurs WHERE identifiant=?');
-			$check_id->execute([$identifiant]);
-			$utilisateur = $check_id->fetch();
-			
-			if ($utilisateur) {
-				$get_motdepasse = $bdd->prepare("SELECT motdepasse FROM administrateurs WHERE identifiant = :m_d_p");
-				$get_motdepasse->bindParam(':m_d_p', $m_d_p, PDO::PARAM_STR);
-				
-				$get_motdepasse->execute();
-				
-				$valid_mdp = $get_motdepasse->fetch(PDO::FETCH_ASSOC);
-				
-				if (!password_verify($m_d_p, $valid_mdp)) {
-					echo ' mot de passe incorrect';
-				}
-				else{
-					//ouverture de la session 
-					$_SESSION['identifiant'] = $identifiant;
-					$_SESSION['statut'] = 'administrateur';
-					
-				echo 'Vous êtes maintenant connecté comme ' . $identifiant . ' <br><a href="">se diriger vers la page d\'accueil</a>';
-				}
-			}	
-		}
-		else{
-			echo 'Identifiant incorrect';
-		}
-	}
+    // Choisir la table selon le type d'utilisateur
+    $table = '';
+    if ($user_type === 'professeurs') {
+        $table = 'professeurs';
+    } elseif ($user_type === 'administrateurs') {
+        $table = 'administrateurs';
+    } elseif ($user_type === 'etudiants') {
+        $table = 'etudiants';
+    } else {
+        echo 'Type d\'utilisateur inconnu.';
+        exit;
+    }
+
+
+    // Vérification de l'identifiant
+    $check_id = $bdd->prepare("SELECT * FROM $table WHERE identifiant = ?");
+    $check_id->execute([$identifiant]);
+    $utilisateur = $check_id->fetch(PDO::FETCH_ASSOC);
+
+
+
+    if ($utilisateur) {
+        // Vérification du mot de passe
+        if (password_verify($m_d_p, $utilisateur['motdepasse'])) {
+            // Connexion réussie
+            $_SESSION['identifiant'] = $identifiant;
+            $_SESSION['statut'] = $user_type;
+
+            echo 'Vous êtes maintenant connecté comme ' . htmlspecialchars($identifiant) . 
+                 ' <br><a href="page_accueil_prof-etudiant-administrateur.php">Se diriger vers la page d\'accueil</a>';
+        } else {
+            echo 'Mot de passe incorrect.';
+        }
+    } else {
+        echo 'Identifiant incorrect.';
+    }
+} else {
+    echo 'Veuillez remplir tous les champs.';
+} 
+
 ?>

@@ -1,6 +1,6 @@
 <?php 
 	session_start();
-	$_SESSION['statut'] = 'etudiant';
+	
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
         <div class="role-menu">
 		
 		<!-- Section pour les étudiants -->
-		<?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'etudiant'): ?>
+		<?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'etudiants'): ?>
             
             <div class="role-section">
                 <h3>Étudiant</h3>
@@ -30,7 +30,7 @@
 		<?php endif; ?>
 		
 		<!-- Section pour les professeurs -->
-		<?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'professeur'): ?>
+		<?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'professeurs'): ?>
             
             <div class="role-section">
                 <h3>Professeur</h3>
@@ -42,7 +42,7 @@
 		<?php endif; ?>
 		
         <!-- Section pour l'administrateur -->
-		<?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'administrateur'): ?>
+		<?php if (isset($_SESSION['statut']) && $_SESSION['statut'] === 'administrateurs'): ?>
             <div class="role-section">
                 <h3>Admin</h3>
                 <ul>
